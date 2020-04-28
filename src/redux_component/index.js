@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import store from '../store/index';
-import { GET_DATA } from '../store/actionType';
-import { changeInputAction, addBtnAction, deleteItemAction } from '../store/actionCreators'
+import { changeInputAction, addBtnAction, deleteItemAction, getDataAction } from '../store/actionCreators'
 import ToDoListUI from './toDoList';
-import axios from 'axios';
 
 class TodoList extends Component {
   constructor(props) {
@@ -17,18 +15,8 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://rap2.taobao.org:38080/app/mock/252426/example/1587973285150')
-      .then((res) => {
-        console.log('res', res);
-        const dealArray = [];
-        res.data.array.forEach(item => {
-          dealArray.push(item.bar);
-        })
-        store.dispatch({
-          type: GET_DATA,
-          value: dealArray,
-        })
-      })
+    const action = getDataAction();
+    store.dispatch(action);
   }
 
   changeInputValue(e) {
